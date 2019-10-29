@@ -1,0 +1,82 @@
+<!--
+  specific gen_ module 0.1
+  gen_ module v0.1
+  depandency: wrap, convert
+-->
+
+<script>
+  gen = {};
+
+  //::a->Html
+  gen.input_form = function(x){
+    var res, lifetime_options;
+    lifetime_options = gen.options([
+                                    {label:'Eternal', value:-1},
+                                    {label:'24h', value:'86400'},
+                                    {label:'48h', value:'172800'}
+                                    ], 0);
+
+
+    res = [
+      gen.input({id:'brief', class:'full'}),
+      gen.text_area({id:'description', rows:3, cols:36}),
+      wrap.in_tag('select', {id:'lifetime'}, lifetime_options)
+    ];
+    return res.join(BR);
+  }
+
+  gen.text_area = function(attr){
+    return wrap.in_tag('textarea', attr, '');
+  }
+
+  //::Hashmap->Html
+  gen.input = function(h, free){
+    var head, tail, middle;
+    head = "<input " + convert.to.attrs(h);
+    tail =  " >";
+    middle = def(free)?free:'';
+    return head + middle + tail;
+  };
+
+  //::[a]->Int->Html
+  gen.options = function(xs, selected_index){
+    return xs.map(function(x, i){
+    if (selected_index == i) {
+          return '<option value="' + x.value + '" selected>' + x.label + '</option>';
+    } else {
+        return wrap.in_tag('option', {value:x.value}, x.label);
+    }
+    });
+  }
+
+  //::{:id :rows :cols}->MappedHtmlTable
+  gen.table = function(x){
+    var id, rows, cols, html, s;
+    id = x.id;rows = x.rows;cols = x.cols;
+    html = '';
+    for(i=0;i<rows;i++){
+      s = '';
+      for(j=0;j<cols;j++){
+        s+= wrap.in_tag('td', {id:id + '_td_' + i + '_' + j}, '');
+      };
+      html+=wrap.in_tag('tr', {id:id + '_tr_' + i}, s);
+    };
+    html = wrap.in_tag('table', {id:id}, html);
+   return html
+  }
+
+
+  gen.lifetime_options = gen.options([
+                                    {label:'Eternal', value:-1},
+                                    {label:'24h', value:'86400'},
+                                    {label:'48h', value:'172800'}
+                                    ], 0);
+ gen.trigger_types = gen.options([
+                                    {label:'A', value:'a'},
+                                    {label:'B', value:'b'},
+                                    {label:'C', value:'c'},
+                                    {label:'D', value:'d'},
+                                    {label:'G', value:'g'}
+                                    ], 0);
+
+</script>

@@ -1,0 +1,19 @@
+<!--
+  validate_ module v0.1
+-->
+
+<script>
+  validate = {};
+
+  //::BookingRequest->Bool
+  validate.input_panel = function(panel_map){
+    return panel_map.allIds.every(function(id){
+      var h, tag_val, val;
+      h = panel_map.byId[id];
+      tag_val = $('#' + id).val();
+      val = def(h.canonize) ? h.canonize(tag_val) : tag_val;
+      return def(h.validation_rule) ? h.validation_rule(val) : true;
+    });
+  };
+
+</script>

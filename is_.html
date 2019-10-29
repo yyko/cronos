@@ -1,0 +1,101 @@
+<script>
+// is module v0.4 by yyk@mail.ru
+//2018-05-03 empty string and sentence added
+//2018-03-11 empty range added
+//empty_vh added
+
+
+
+//::Int->Bool
+function is_leap_year(year){
+  return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0);
+}
+
+(function(){
+	var question, record, target, notepad, tags, error, num, id,
+    string, arr, sheet, spreadsheet, folder, jo, date, nan, empty_vh, empty_range, empty_string, sentence;
+
+    sentence = function(x){return x.charAt(x.length-1) == '.'};
+
+    empty_string = function(x){return x == '';};
+
+    empty_vh = function(vh){
+      return vh.length == 1 && Object.keys(vh[0]).length == 0;
+    }
+
+    empty_range = function(arr, from , to){return arr.slice(from, to+1).every(function(x){return x==''});}
+
+    jo = function(x){return {}.toString.call(x) == '[object JavaObject]'}
+
+    folder = function(x){
+      var id;
+      if (is.jo(x) && x.getId !== undefined) {
+        id = x.getId();
+        return id.substr(0,1) == '0' && id.length == 19;
+      }
+      else return false;
+    }
+
+    sheet = function(x){return (is.jo(x) && x.showSheet !== undefined)
+    }
+
+
+    spreadsheet = function(x){
+      if (is.jo(x) && x.getId !== undefined && x.getSpreadsheetLocale !== undefined) {
+        return is.id(x.getId());
+      }
+      else return false;
+    };
+
+    arr = function(a) {return ({}.toString.call(a) == '[object Array]')};
+    date = function(a) {return {}.toString.call(a) === '[object Date]'};
+
+
+    string = function(x){return (typeof x) == 'string'};
+
+    id = function(x){return is.string(x) && x.substr(0,1) == '1' && x.length == 44};
+
+    num = function(n){return !isNaN(parseFloat(n)) && isFinite(n)};
+
+    nan = isNaN;
+
+    error = function(line){return tags(line) && /^#/.test(line)};
+
+    tags = function(line){return /[^?.]$/.test(line) && /\./.test(line)};
+
+    notepad = function(s){return /Notepad_\d{2}\.\d{2}\.\d{2,4}\s\d{1,2}:\d{1,2}/.test(s)};
+
+    target = function(line){
+      var a, b;
+      a = tags(line);
+      b = /^#/.test(line);
+      return a && !b;
+    };
+
+    record = function(line){return /.+(.\s)*.*\.$/.test(line)};
+
+	question  = function(line){return /.+\?$/.test(line)};
+
+	is = {};
+    is.sentence = sentence;
+    is.empty_string = empty_string;
+    is.empty_range = empty_range;
+    is.empty_vh = empty_vh;
+    is.nan = nan;
+    is.date = date;
+    is.jo = jo;
+    is.folder = folder;
+    is.num = num;
+    is.sheet = sheet ;
+    is.spreadsheet = spreadsheet;
+    is.arr = arr;
+    is.id = id;
+    is.string = string;
+    is.tags = tags;
+    is.error = error;
+    is.notepad = notepad;
+    is.target = target;
+    is.record = record;
+	is.question = question;
+})();
+</script>
