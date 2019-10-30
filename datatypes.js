@@ -1,4 +1,12 @@
 /*
+
+//data DayDescription = {date:Date,
+                         day_of_month::[1-31],
+                         day_of_week:Int,
+                         weekday_of_month::[0-5],
+                         last_weekday_of_month::Bool,
+                         last_day_of_month::Bool}
+
 data GeneratorSlot = {slot_id: Id,
                       group_id: Id,
                       brief: String,
@@ -9,6 +17,7 @@ data GeneratorSlot = {slot_id: Id,
                       rounds: Int,
                       rounds_left:Int,
                       repeat: always|finite}
+
 //data Trigger = {type::TriggerType, start_date::Iso8601d}
 //type GroupId = Int
 //data TriggerType = A|B|C|...|Z
@@ -29,5 +38,4 @@ data GeneratorSlot = {slot_id: Id,
 //data Timezone = Timezone
 //data Seconds = Int
 //data YearMonth = YYYY-MM
-//data DetailedDate = {date:Date, day_of_month:Int, day_of_week:Int, weekday_of_month:Int, last_weekday_of_month: Boolean, last_day_of_month:Boolean}
 */

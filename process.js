@@ -6,7 +6,7 @@ process = {};
 process.slots = function(test_mode_on, date, user_code){
   var date, fired_groups, idgts, active, xs;
   date = date || new Date(beginningOfDay(new Date()));
-  active = extract.active(get.slots());
+  active = extract.active(ssb.get_vh(get.sheet(SLOTS_SH)));
   fired_groups = get.fired_groups(group.by.field(get.triggers(), GROUP_ID), date);
   if (test_mode_on) {
     xs = fired_groups.slice(0, 1);

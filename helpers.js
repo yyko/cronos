@@ -1,10 +1,3 @@
-function check_local_to_utc(){
-  var date, s;
-  date = new Date('2019/02/08');
-  clog(Date.parse(date.toISOString()).toString());
-}
-
-
 //to create id for trigger group:
 //goto sheet 'groups'
 //find last record

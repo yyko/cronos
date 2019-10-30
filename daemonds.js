@@ -1,5 +1,10 @@
-//daemonds v0.2
+//daemonds 0.4.1
+
 function daily() {
-  process.slots(false);
+  try{
+    process.slots(false, new Date(beginningOfDay(new Date())), USER_CODE);
+  } catch(e){
+    clog(e.stack);
+  }
 }
-//daemonds v0.2
+//daemonds 0.4.1

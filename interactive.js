@@ -1,8 +1,8 @@
-// interactive 0.4.1
+// interactive 0.6.0
 
 function onOpen(){
   var submenu = [
-    {name:"Open R-sidebar", functionName:"open_r_sidebar"},
+    {name:'Add A slot', functionName:'add_slot_of_type_a'},
     {name:"Open sidebar", functionName:"open_sidebar"},
     {name:"Generate manually", functionName:"manual_generation"},
     {name:'Test run', functionName:'test_generation'},
@@ -11,16 +11,15 @@ function onOpen(){
   SpreadsheetApp.getActiveSpreadsheet().addMenu('Sheet Actions', submenu);
 }
 
-function open_r_sidebar(){
-  var html, sheet;
-  html = HtmlService.createTemplateFromFile('r_sidebar').evaluate().setTitle('R sidebar');
-  SpreadsheetApp.getUi().showSidebar(html);
+function add_slot_of_type_a(){
+    add.slot('A');
 }
 
 function install_trigger() {
  var ss;
  ss = SpreadsheetApp.getActive();
- ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(0).create();
+ remove_triggers();
+ ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(3).create();
  Browser.msgBox('All triggers have been installed under ' + Session.getActiveUser() + ' account');
 }
 
@@ -54,4 +53,4 @@ function open_dialog(){
   SpreadsheetApp.getUi().showModalDialog(html, 'Dialog sample');
 }
 
-// interactive 0.4.1
+// interactive 0.6.0

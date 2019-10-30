@@ -14,7 +14,7 @@ post.new_object = function(x){
   options =
    {
      "method" : "post",
-     "muteHttpExceptions":false,
+     "muteHttpExceptions":true,
      "payload" : payload
    };
   try {
@@ -25,8 +25,8 @@ post.new_object = function(x){
       return [{type:'error', data:JSON.stringify(response)}, null];
     }
   } catch(e){
-    clog(e.message);
-    return [{type:'error', data:JSON.stringify(e)}, null];
+
+    return [{type:'error2', data:JSON.stringify(e)}, null];
   }
 }
 
