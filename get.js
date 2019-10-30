@@ -47,7 +47,6 @@ get.fired_groups = function (triggers, date) {
   day = describe_day(date);
   for (group_id in triggers) {
     xs = triggers[group_id];
-    if (group_id == 23) clog(group_id);
     xs.forEach(function(trigger){
       if (fired[trigger.type](trigger, date, day)) {res.push(trigger);};
     })

@@ -36,9 +36,7 @@ fired.d = function(x, date, day){
 //::Trigger->Date->Bool
 fired.g = function(x, date){
   var main;
-  clog('type g');
   main = match_year_interval(x.start_date, date, x.interval==''?1:x.interval);
-  clog(main);
   if (x.start_date == '') {return main;};
   return main && x.start_date<=date;
 }
