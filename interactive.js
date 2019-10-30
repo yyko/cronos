@@ -38,11 +38,11 @@ function open_sidebar(){
   }
 
 function test_generation(){
-  process.slots(true, new Date(), USER_CODE);
+  process.slots(new Date(), USER_CODE, post_new_object_mock);
 }
 
 function manual_generation(){
-  process.slots(false, new Date(), USER_CODE);
+  process.slots(new Date(), USER_CODE, post.new_object);
 }
 
 function open_dialog(){

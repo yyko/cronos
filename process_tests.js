@@ -3,7 +3,7 @@ function test_process_slots() {
     'test processing generator slots': function() {
       var date;
       date = new Date();
-      process.slots(true, date, 116);
+      process.slots(date, 116, post_new_object_mock);
     }
   });
 }

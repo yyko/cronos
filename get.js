@@ -1,5 +1,3 @@
-//get v0.2
-//decor::Open
 var get = {};
 
 get.state = function(key_value_sheet, slots_sheet){
@@ -38,27 +36,26 @@ get.triggers = function(){
   .reduce(function(a, b){return a.concat(b)}, []);
 }
 
-//::IdGroupedTriggers->Date->[Trigger]
-get.fired_groups = function (triggers, date) {
+//::IdGroupedTriggers->Date->TriggersMap
+get.fired_groups_map = function (triggers, date) {
   //triggers - object collection, date - js date;
   //returns array of triggers groups (numbers) that fired
   var res, group_id, day, i, xs;
-  res = [];
+  res = {};
   day = describe_day(date);
   for (group_id in triggers) {
     xs = triggers[group_id];
     xs.forEach(function(trigger){
-      if (fired[trigger.type](trigger, date, day)) {res.push(trigger);};
+      if (fired[trigger.type](trigger, date, day)) {
+        res[group_id] = true;
+      };
     })
   }
   return res;
 }
-
-
 
 get.cons_weekdays = function() {
   return WEEKDAYS.map(function(a) {return a.substring(0,3);});
 }
 
 get.sheet = function(name){return SpreadsheetApp.getActive().getSheetByName(name)};
-//get v0.2

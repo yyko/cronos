@@ -637,6 +637,9 @@ compose = function(f, g) {
   };
 };
 
+dnt.bod = dnt.begining_of_day;
+dnt.local_to_utc_unixms = function(date){return Date.parse(date.toISOString()).toString();}
+
 I_D = dnt.day_of_our_era;
 D_I = dnt.era_day_to_$;
 J_I = dnt.to_iso8601d;

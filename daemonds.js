@@ -1,10 +1,7 @@
-//daemonds 0.4.1
-
 function daily() {
   try{
-    process.slots(false, new Date(beginningOfDay(new Date())), USER_CODE);
+    process.slots(new Date(beginningOfDay(new Date())), USER_CODE, post.new_object);
   } catch(e){
     clog(e.stack);
   }
 }
-//daemonds 0.4.1
