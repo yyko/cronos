@@ -1,5 +1,6 @@
-//version: 0.4.2
+//version: 3.3.2
 //author: yyk@mail.ru
+//2019-02-16 19:00:39 2.3.2 - dnt.to_utc and dnt.to_iso8601 added
 //2018-10-11 00:46:50 v2.3 - translation from js date to ISO8601 string added
 //2018-09-03 00:21:20 v2.2 - last and first day of year added
 //2018-08-16 16:00:00 v2.1 - new category U and morphisms to them
@@ -8,7 +9,8 @@
 //2018-05-15 17:29:27 v1.8 - add_minutes implemented
 //2018-03-02 21:45:21 v1.7 - era features added
 //2017-12-26 19:28:18 $ sign added as a sysnonim for dnt.to_iso8601
-//dependences: utils.suffix;
+
+//dependences: utils
 //data SimpleTime //example '10:00'
 //data DoE = Integer
 //data Woe = Integer
@@ -44,31 +46,14 @@ WEEKDAYS_SHORT = WEEKDAYS.map(function(month_name){return month_name.substr(0,3)
 DAY_IN_MILIS = 24 * 60 * 60 * 1000;
 MS_ID_DAY = 24 * 60 * 60 * 1000;
 
-dnt.local_to_utc_unixms = function(date){return Date.parse(date.toISOString()).toString();}
-
-
-dnt.local_to_utc8601 = function(date){
-  var s, arr, year, month, day, time, time_offset;
-  s = date.toUTCString();
-  arr = s.split(' ');
-  year = arr[3];
-  day = arr[1];
-  month = lz(date.getMonth() + 1);
-  time = arr[4];
-  time_offset = '+0000';
-  return [year, month, day].join('-') + 'T' + time + ' ' + time_offset;
-}
+//::Date->Iso8601
+dnt.to_iso8601 = function(d, tz){
+    return Utilities.formatDate(d, tz, 'Y-MM-dd HH:mm:ss Z');
+};
 
 //::Date->Iso8601
-dnt.to_iso8601 = function(js_date){
-  var arr, year, month, day, time, time_offset;
-  arr = js_date.toString().split(' ');
-  year = arr[3];
-  day = arr[2];
-  month = lz(js_date.getMonth() + 1);
-  time = arr[4];
-  time_offset = arr[5].slice(3);
-  return [year, month, day].join('-') + 'T' + time + ' ' + time_offset;
+dnt.to_utc = function(d){
+    return Utilities.formatDate(d, 'UTC', 'Y-MM-dd HH:mm:ss Z');
 };
 
 //::SimpleTime->Minutes->SimpleTime
@@ -329,9 +314,9 @@ dnt.get_week_workdays = function(date){
 //::Date->UsaDate
 dnt.jsdate_to_usa = function(date) {
   var year = date.getFullYear();
-  var month = ("00" + (date.getMonth() + 1)).substr(-2);
-  var day = ("00" + date.getDate()).substr(-2);
-  return month + "/" + day + "/" + year;
+  var month = ('00' + (date.getMonth() + 1)).substr(-2);
+  var day = ('00' + date.getDate()).substr(-2);
+  return month + '/' + day + '/' + year;
 };
 
 //::Iso8601d->Int->Iso8601d
@@ -381,6 +366,17 @@ dnt.inc_month = function(ym){
   month = parseInt(arr[1], 10);
   year = month == 12 ? (year + 1) : year;
   month = month == 12 ? 1 : (month + 1);
+  return year + '-' + lz(month);
+};
+
+//::YearMonth -> YearMonth
+dnt.dec_month = function(ym){
+  var year, month, arr;
+  arr = ym.split('-');
+  year = parseInt(arr[0], 10);
+  month = parseInt(arr[1], 10);
+  year = month == 1 ? (year - 1) : year;
+  month = month == 1 ? 12 : (month - 1);
   return year + '-' + lz(month);
 };
 
@@ -634,13 +630,12 @@ dnt.diff = function(arg) {
   };
 };
 
-dnt.bod = dnt.begining_of_day;
-dnt.doe_$ = dnt.era_day_to_$;
-dnt.$_doe = dnt.day_of_our_era;
-dnt.$_woe = dnt.week_of_our_era;
-dnt.$ = dnt.to_iso8601d;
-dnt.$$ = dnt.iso8601d_to_date;
-$ = dnt.$;
+//::Function->Function->Function
+compose = function(f, g) {
+  return function(x) {
+    return f(g(x));
+  };
+};
 
 I_D = dnt.day_of_our_era;
 D_I = dnt.era_day_to_$;
@@ -655,4 +650,4 @@ U_D = compose(J_D, U_J);
 D_U = compose(J_U, D_J);
 U_I = compose(J_I, U_J);
 
-// dnt 0.4.2
+//version: 3.3.2
