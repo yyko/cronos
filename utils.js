@@ -168,28 +168,6 @@ function get_cons_weekdays() {
   return WEEKDAYS.map(function(a) {return a.substring(0,3);});
 }
 
-function post_new_object(object)  {
-  var response ,txt;
-  var url = "http:first.sedecilliard.com/ajax/ajax_port";
-  var payload = {
-    "object" : JSON.stringify(object),
-    "query_type": 'new_object'
-
-  };
-  var options =
-   {
-     "method" : "post",
-     "payload" : payload
-
-   };
-  clog(options);
-  response = UrlFetchApp.fetch(url, options);
-  var txt = response.getContentText();
-  clog(txt);
-  return txt;
-}
-
-
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename)
       .getContent();
