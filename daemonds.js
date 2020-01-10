@@ -1,6 +1,8 @@
 function daily() {
   try{
-    process.slots(new Date(beginningOfDay(new Date())), USER_CODE, post.new_object);
+    var bundle;
+    bundle = {date : new Date(), user_code : USER_CODE, post_fn : post.new_object};
+    process.slots(bundle);
   } catch(e){
     clog(e.stack);
   }

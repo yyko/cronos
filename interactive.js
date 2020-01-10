@@ -4,11 +4,26 @@ function onOpen(){
   var submenu = [
     {name:'Add A slot', functionName:'add_slot_of_type_a'},
     {name:"Open sidebar", functionName:"open_sidebar"},
+    {name:"Generate slot", functionName:"generate_slot"},
     {name:"Generate manually", functionName:"manual_generation"},
     {name:'Test run', functionName:'test_generation'},
     {name:'Install trigger', functionName:'install_trigger'}
     ];
   SpreadsheetApp.getActiveSpreadsheet().addMenu('Sheet Actions', submenu);
+}
+
+function generate_slot(){
+  var bundle, slots, range, sheet, row, h;
+  range = SpreadsheetApp.getActive().getActiveSheet().getActiveRange();
+  sheet = range.getSheet();
+  if (sheet.getName() == 'trigger slots') {
+    row = range.getRow();
+    if (row > 2) {
+      h = ssb.get_row(sheet, row);
+      bundle = {date : new Date(), user_code : USER_CODE, post_fn : post.new_object, slots : [h]};
+      process.slots(bundle);
+    }
+  }
 }
 
 function add_slot_of_type_a(){
@@ -38,11 +53,15 @@ function open_sidebar(){
   }
 
 function test_generation(){
-  process.slots(new Date(), USER_CODE, post_new_object_mock);
+  var bundle;
+  bundle = {date : new Date(), user_code : USER_CODE, post_fn : post_new_object_mock};
+  process.slots(bundle);
 }
 
 function manual_generation(){
-  process.slots(new Date(), USER_CODE, post.new_object);
+  var bundle;
+  bundle = {date : new Date(), user_code : USER_CODE, post_fn : post.new_object};
+  process.slots(bundle);
 }
 
 function open_dialog(){
