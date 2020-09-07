@@ -106,7 +106,7 @@ function match_year_interval(start_date, date, interval) {
 function match_week_interval(start_date, date, interval) {
   var wd, diff;
   wd = nearest_weekday(start_date, date.getDay());
-  diff = (date.getTime() - wd.getTime())/DAY_IN_MILIS;
+  diff = (dnt.bod(date) - wd.getTime())/DAY_IN_MILIS;
   return ((diff/7) % interval) == 0 ? true : false;
 }
 
