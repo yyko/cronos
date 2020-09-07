@@ -18,5 +18,4 @@ log_module.log = function(string, level) {
   ssa.insert_matrix(matrix, sheet, 1);
   last = sheet.getLastRow();
   if (last>= LOG_LENGTH) {sheet.deleteRow(last);}
-  sheet.getRange(1, 1).activate().getValue();
 }
