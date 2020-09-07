@@ -21,7 +21,11 @@ function generate_slot(){
     row = range.getRow();
     if (row > 2) {
       h = ssb.get_row(sheet, row);
-      bundle = {date : new Date(), user_code : USER_CODE, post_fn : post.new_object, slots : [h]};
+      bundle = {date: new Date(),
+                user_code: USER_CODE,
+                post_fn: post.new_object,
+                slots: [h],
+                ignore_triggers: true};
       process.slots(bundle);
     }
   }
