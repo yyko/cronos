@@ -1,7 +1,7 @@
 process = {};
 
 //::Date->Int->Fn->IO()
-process.slots = function(a){
+process.slots = function(a) {
   var date, fired_groups, idgts, active, xs, triggers_map, date, user_code, post_fn, slots, ignore_triggers;
   date = a.date;
   user_code = a.user_code;
@@ -9,14 +9,14 @@ process.slots = function(a){
   ignore_triggers = a.ignore_triggers || false;
   slots = a.slots || ssb.get_vh(get.sheet(SLOTS_SH));
   date = date || new Date(beginningOfDay(new Date()));
-  active = ignore_triggers? slots : extract.active(slots);
-  triggers_map = group.by.field(get.triggers(), GROUP_ID)
+  active = ignore_triggers ? slots : extract.active(slots);
+  triggers_map = group.by.field(get.triggers(), GROUP_ID);
   fired_groups = get.fired_groups_map(triggers_map, date);
-  active.forEach(function(slot){
+  active.forEach(function(slot) {
     var bod, goal, res;
     if (def(fired_groups[slot[GROUP_ID]]) || ignore_triggers) {
       bod = dnt.bod(date);
-      slot.feedback_date = dnt.local_to_utc_unixms(new Date(bod))/1000;
+      slot.feedback_date = dnt.local_to_utc_unixms(new Date(bod)) / 1000;
       goal = gen.goal(slot, user_code);
       res = post_fn(goal);
       log('slot ' + slot[SLOT_ID] +  ': ' + slot.brief, 1);
@@ -28,4 +28,4 @@ process.slots = function(a){
       }
     }
   });
-}
+};

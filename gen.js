@@ -3,11 +3,11 @@
 gen = {};
 
 //::Slot->Goal
-gen.goal = function(h, user_code){
- var obj, t1, t2, interval;
+gen.goal = function(h, user_code) {
+  var obj, t1, t2, interval;
   obj = {};
   obj.class_root = 'target';
-  obj.target_brief = h.brief
+  obj.target_brief = h.brief;
   obj.target_description = h.description;
   obj.target_parent_code = h.parent_code;
   obj.target_feedback_date = h.feedback_date;
@@ -17,7 +17,7 @@ gen.goal = function(h, user_code){
   }
   else {
     interval = parse.interval(h.interval);
-   // t1 = TODO: write proper method for DATATIME in mySQL
+    // t1 = TODO: write proper method for DATATIME in mySQL
     //t2 = TODO: write proper method for DATATIME in mySQL
   }
   if (h.lifetime == '') {
@@ -28,16 +28,16 @@ gen.goal = function(h, user_code){
     obj.target_lifetime = h.lifetime;
   }
   return obj;
-}
+};
 
-gen.options = function(xs, selected_index){
-  return xs.map(function(x, i){
-  if (selected_index == i) {
-        return '<option value="' + x.value + '" selected>' + x.label + '</option>';
-  } else {
-      return wrap.in_tag('option', {value:x.value}, x.label);
-  }
+gen.options = function(xs, selected_index) {
+  return xs.map(function(x, i) {
+    if (selected_index == i) {
+      return '<option value="' + x.value + '" selected>' + x.label + '</option>';
+    } else {
+      return wrap.in_tag('option', {value : x.value}, x.label);
+    }
   });
-}
+};
 
 // gen 0.4.2

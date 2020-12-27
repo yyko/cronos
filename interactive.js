@@ -1,19 +1,19 @@
 // interactive 0.6.0
 
-function onOpen(){
+function onOpen() {
   var submenu = [
-    {name:'Add A slot', functionName:'add_slot_of_type_a'},
-    {name:'Add B slot', functionName:'add_slot_of_type_b'},
-    {name:"Open sidebar", functionName:"open_sidebar"},
-    {name:"Generate slot", functionName:"generate_slot"},
-    {name:"Generate manually", functionName:"manual_generation"},
-    {name:'Test run', functionName:'test_generation'},
-    {name:'Install trigger', functionName:'install_trigger'}
-    ];
+    {name : 'Add A slot', functionName : 'add_slot_of_type_a'},
+    {name : 'Add B slot', functionName : 'add_slot_of_type_b'},
+    {name : "Open sidebar", functionName : "open_sidebar"},
+    {name : "Generate slot", functionName : "generate_slot"},
+    {name : "Generate manually", functionName : "manual_generation"},
+    {name : 'Test run', functionName : 'test_generation'},
+    {name : 'Install trigger', functionName : 'install_trigger'}
+  ];
   SpreadsheetApp.getActiveSpreadsheet().addMenu('Sheet Actions', submenu);
 }
 
-function generate_slot(){
+function generate_slot() {
   var bundle, slots, range, sheet, row, h;
   range = SpreadsheetApp.getActive().getActiveSheet().getActiveRange();
   sheet = range.getSheet();
@@ -21,63 +21,63 @@ function generate_slot(){
     row = range.getRow();
     if (row > 2) {
       h = ssb.get_row(sheet, row);
-      bundle = {date: new Date(),
-                user_code: USER_CODE,
-                post_fn: post.new_object,
-                slots: [h],
-                ignore_triggers: true};
+      bundle = {date : new Date(),
+        user_code : USER_CODE,
+        post_fn : post.new_object,
+        slots : [h],
+        ignore_triggers : true};
       process.slots(bundle);
     }
   }
 }
 
-function add_slot_of_type_a(){
-    add.slot('A');
+function add_slot_of_type_a() {
+  add.slot('A');
 }
 
-function add_slot_of_type_b(){
-    add.slot('B');
+function add_slot_of_type_b() {
+  add.slot('B');
 }
 
 function install_trigger() {
- var ss;
- ss = SpreadsheetApp.getActive();
- remove_triggers();
- ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(3).create();
- Browser.msgBox('All triggers have been installed under ' + Session.getActiveUser() + ' account');
+  var ss;
+  ss = SpreadsheetApp.getActive();
+  remove_triggers();
+  ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(3).create();
+  Browser.msgBox('All triggers have been installed under ' + Session.getActiveUser() + ' account');
 }
 
 function remove_triggers() {
- var triggers;
- triggers =  ScriptApp.getProjectTriggers();
- triggers.forEach(function(element) {
-   ScriptApp.deleteTrigger(element);
- });
+  var triggers;
+  triggers =  ScriptApp.getProjectTriggers();
+  triggers.forEach(function(element) {
+    ScriptApp.deleteTrigger(element);
+  });
 }
 
-function open_sidebar(){
+function open_sidebar() {
   var html, sheet;
   html = HtmlService.createTemplateFromFile('sidebar').evaluate().setTitle('Sidebar');
   SpreadsheetApp.getUi().showSidebar(html);
-  }
+}
 
-function test_generation(){
+function test_generation() {
   var bundle;
   bundle = {date : new Date(), user_code : USER_CODE, post_fn : post_new_object_mock};
   process.slots(bundle);
 }
 
-function manual_generation(){
+function manual_generation() {
   var bundle;
   bundle = {date : new Date(), user_code : USER_CODE, post_fn : post.new_object};
   process.slots(bundle);
 }
 
-function open_dialog(){
+function open_dialog() {
   var html, sheet;
   html = HtmlService.createTemplateFromFile('dialog').evaluate()
-      .setWidth(600)
-      .setHeight(400);
+    .setWidth(600)
+    .setHeight(400);
   SpreadsheetApp.getUi().showModalDialog(html, 'Dialog sample');
 }
 

@@ -37,30 +37,30 @@ _100_YEARS = _4_YEARS * 25 - 1;
 _400_YEARS = _100_YEARS * 4 + 1;
 LEAP_YEAR_MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 MONTHS_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-MONTHS_LENGTH = {'January':31, 'February':28, 'March':31, 'April':30, 'May':31, 'June':30, 'July':31, 'August':31, 'September': 30, 'October':31, 'November':30, 'December':31};
+MONTHS_LENGTH = {'January' : 31, 'February' : 28, 'March' : 31, 'April' : 30, 'May' : 31, 'June' : 30, 'July' : 31, 'August' : 31, 'September' : 30, 'October' : 31, 'November' : 30, 'December' : 31};
 
 WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday', 'Saturday'];
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-MONTHS_SHORT = MONTHS.map(function(month_name){return month_name.substr(0,3);});
-WEEKDAYS_SHORT = WEEKDAYS.map(function(month_name){return month_name.substr(0,3);});
+MONTHS_SHORT = MONTHS.map(function(month_name) {return month_name.substr(0,3);});
+WEEKDAYS_SHORT = WEEKDAYS.map(function(month_name) {return month_name.substr(0,3);});
 DAY_IN_MILIS = 24 * 60 * 60 * 1000;
 MS_ID_DAY = 24 * 60 * 60 * 1000;
 
 //::Date->Iso8601
-dnt.to_iso8601 = function(d, tz){
-    return Utilities.formatDate(d, tz, 'Y-MM-dd HH:mm:ss Z');
+dnt.to_iso8601 = function(d, tz) {
+  return Utilities.formatDate(d, tz, 'Y-MM-dd HH:mm:ss Z');
 };
 
 //::Date->Iso8601
-dnt.to_utc = function(d){
-    return Utilities.formatDate(d, 'UTC', 'Y-MM-dd HH:mm:ss Z');
+dnt.to_utc = function(d) {
+  return Utilities.formatDate(d, 'UTC', 'Y-MM-dd HH:mm:ss Z');
 };
 
 //::SimpleTime->Minutes->SimpleTime
-dnt.add_minutes = function(st, offset){
+dnt.add_minutes = function(st, offset) {
   var arr, h, m, mins_to_st;
 
-  mins_to_st = function(n){
+  mins_to_st = function(n) {
     var rest, h, m;
     rest = n % (24 * 60);
     m = rest % 60;
@@ -75,12 +75,12 @@ dnt.add_minutes = function(st, offset){
 };
 
 //::DoE->DoW
-dnt.dow = function(doe){
+dnt.dow = function(doe) {
   return doe % 7;//0 - ??? Sat? Sun? Mon
 };
 
 //::DayOfEpoch->[DayOfEpoch, DayOfEpoch]
-dnt.get_woe_boundaries = function(doe){
+dnt.get_woe_boundaries = function(doe) {
   var full_weeks, start;
   full_weeks = div(doe, 7);
   start = full_weeks * 7;
@@ -88,7 +88,7 @@ dnt.get_woe_boundaries = function(doe){
 };
 
 //::Iso8601->Integer
-dnt.day_of_our_era = function(iso8601){
+dnt.day_of_our_era = function(iso8601) {
   var year, d, full_months, full_circles, rest, centuries_in_rest, small_circles_in_rest, months_days, full_months,
     day_pos, month, day, months;
 
@@ -119,7 +119,7 @@ dnt.day_of_our_era = function(iso8601){
 };
 
 //::Integer->iso8601d
-dnt.era_day_to_$ = function(day){
+dnt.era_day_to_$ = function(day) {
   var year, months_days, diff, rest, days_in_year, c_month, mega_steps, mega_rest,
     full_circles, centuries, years, small_circles, rest_years, date_structure, day_count_var2;
   rest = day;
@@ -135,16 +135,16 @@ dnt.era_day_to_$ = function(day){
     rest_years = 3;
   }
   rest = rest - rest_years * _1_YEAR;
-  var d = date_structure = {day:day,
-    big_circles:mega_steps,
-    centuries: centuries,
-    small_circles:small_circles,
-    rest_years:rest_years,
-    rest:rest};
+  var d = date_structure = {day : day,
+    big_circles : mega_steps,
+    centuries : centuries,
+    small_circles : small_circles,
+    rest_years : rest_years,
+    rest : rest};
   if (d.rest == 0) {
     day_count_var2 =  d.big_circles * _400_YEARS + d.centuries * _100_YEARS + d.small_circles * _4_YEARS + d.rest_years * 365 + d.rest;
     year = d.big_circles * 400 + d.centuries * 100 + d.small_circles * 4 + d.rest_years;
-    if(d.centuries == 4) {
+    if (d.centuries == 4) {
       //it is a century issue
       return l4z(year) + '-12-30';
     } else {
@@ -156,7 +156,7 @@ dnt.era_day_to_$ = function(day){
     c_month = 0;
     var days_in_month;
     days_in_month = months_days[c_month];
-    while (rest > 0 && rest > days_in_month){
+    while (rest > 0 && rest > days_in_month) {
       rest = rest - months_days[c_month];
       c_month++;
       days_in_month = months_days[c_month];
@@ -166,17 +166,16 @@ dnt.era_day_to_$ = function(day){
   return;
 };
 
-dnt.week_of_our_era = function(iso8601){
+dnt.week_of_our_era = function(iso8601) {
   return Math.floor(dnt.day_of_our_era(iso8601) / 7) + 1;
 };
 
-dnt.is_leap = function(year){return ((year % 4 == 0) && (year % 100) != 0 || (year % 400) == 0);};
-
+dnt.is_leap = function(year) {return ((year % 4 == 0) && (year % 100) != 0 || (year % 400) == 0);};
 
 //::Date->Period
-dnt.get_week_boundaries = function(a){
+dnt.get_week_boundaries = function(a) {
   var mon, sun, diff, weekday, date;
-  if (dnt.is_date(a)){
+  if (dnt.is_date(a)) {
     date = a;
     weekday = date.getDay();
     diff = weekday == 0 ? 6 : weekday - 1;
@@ -184,7 +183,7 @@ dnt.get_week_boundaries = function(a){
     sun = dnt.add_days(mon, 6);
     return [dnt.to_iso8601d(mon), dnt.to_iso8601d(sun)];
   } else {
-    if(is.num(a)){
+    if (is.num(a)) {
       //agrument is a number treats like a number or era week
       var day;
       //???
@@ -192,12 +191,10 @@ dnt.get_week_boundaries = function(a){
   }
 };
 
-
-dnt.fm_s = function(fm){return MONTHS[fm[0]] + ' ' + fm[1];};
-
+dnt.fm_s = function(fm) {return MONTHS[fm[0]] + ' ' + fm[1];};
 
 //FullMonth->Number->FullMonth
-dnt.add_months = function(fm, n){
+dnt.add_months = function(fm, n) {
   var shift, dozens, res, months, years;
   months = fm[1] * 12 + fm[0];
   months += n;
@@ -207,18 +204,18 @@ dnt.add_months = function(fm, n){
 };
 
 //::Date->FullMonth
-dnt.get_full_month = function(date){return [date.getMonth(), date.getFullYear()];};
+dnt.get_full_month = function(date) {return [date.getMonth(), date.getFullYear()];};
 
 //::Date->YearMonth
-dnt.to_ym = function(d){return d.getFullYear() + '-' + lz((d.getMonth() + 1));};
+dnt.to_ym = function(d) {return d.getFullYear() + '-' + lz((d.getMonth() + 1));};
 
 //::MonthYear->Bool
-dnt.valid_my = function(s){
+dnt.valid_my = function(s) {
   return MONTHS_SHORT.indexOf(s.trim().split(' ')[0]) > -1;
 };
 
 //::MonthYear->YearMonth
-dnt.my_to_ym = function(m_y){
+dnt.my_to_ym = function(m_y) {
   var arr, month_name, month, year;
   arr = m_y.split(' ');
   month_name = arr[0];
@@ -227,9 +224,8 @@ dnt.my_to_ym = function(m_y){
   return year + '-' + (month + 1);
 };
 
-
 //::Date->Date
-dnt.last_day_of_month = function(date){
+dnt.last_day_of_month = function(date) {
   var d, year, month;
   year = date.getFullYear(date);
   month = date.getMonth();
@@ -238,7 +234,7 @@ dnt.last_day_of_month = function(date){
 };
 
 //::YearMonth->Period
-dnt.ym_to_period = function(ym){
+dnt.ym_to_period = function(ym) {
   var arr, start_date, end_date;
   arr = ym.split('-');
   start_date = new Date(arr[0], Number(arr[1]) - 1, 1);
@@ -246,31 +242,31 @@ dnt.ym_to_period = function(ym){
   return [dnt.to_iso8601d(start_date), dnt.to_iso8601d(end_date)];
 };
 
-lz = function(x){return ('00' + x).substr(-2);};
+lz = function(x) {return ('00' + x).substr(-2);};
 //::Date -> Iso8601d
-dnt.to_iso8601d = function(d){return d.getFullYear() + '-' + lz((d.getMonth() + 1)) + '-' + lz(d.getDate());};
+dnt.to_iso8601d = function(d) {return d.getFullYear() + '-' + lz((d.getMonth() + 1)) + '-' + lz(d.getDate());};
 
-dnt.iso8601d_to_mdy = function(iso8601d){
+dnt.iso8601d_to_mdy = function(iso8601d) {
   var arr, month, year, day;
-  arr = iso8601d.split('-').map(function(x){return Number(x);});
+  arr = iso8601d.split('-').map(function(x) {return Number(x);});
   year = arr[0];
   month = MONTHS_SHORT[arr[1] - 1];
   day = arr[2];
   return month + ' ' + day + ', ' + year;
 };
 
-dnt.get_weekday_sequence = function(weekday, date, n){
+dnt.get_weekday_sequence = function(weekday, date, n) {
   var i, res, start_date;
   res = [];
   start_date = dnt.get_immediate_weekday(weekday, date);
   res.push(start_date);
-  for(i = 1;i < n;i++){
+  for (i = 1;i < n;i++) {
     res.push(dnt.add_days(start_date, -i * 7));
   }
   return res;
 };
 
-dnt.get_immediate_weekday = function(weekday, date){
+dnt.get_immediate_weekday = function(weekday, date) {
   var current_weekday, diff;
   current_weekday = date.getDay();
   diff = current_weekday - weekday;
@@ -279,20 +275,19 @@ dnt.get_immediate_weekday = function(weekday, date){
 };
 
 //::Date->Date
-dnt.first_day_of_year = function(date){return dnt.iso8601d_to_date(date.getFullYear() + '-01-01');};
+dnt.first_day_of_year = function(date) {return dnt.iso8601d_to_date(date.getFullYear() + '-01-01');};
 
 //::Date->Date
-dnt.last_day_of_year = function(date){return dnt.iso8601d_to_date(date.getFullYear() + '-12-31');};
-
+dnt.last_day_of_year = function(date) {return dnt.iso8601d_to_date(date.getFullYear() + '-12-31');};
 
 //::Date->Date
-dnt.first_day_of_month = function(date){return new Date(date.getFullYear(), date.getMonth(), 1);};
+dnt.first_day_of_month = function(date) {return new Date(date.getFullYear(), date.getMonth(), 1);};
 
 //::Date->Iso8601d
-dnt.first_day_of_prev_month = function(date){return dnt.iso8601d_to_date(dnt.dec_month(dnt.to_month(date)) + '-01');};
+dnt.first_day_of_prev_month = function(date) {return dnt.iso8601d_to_date(dnt.dec_month(dnt.to_month(date)) + '-01');};
 
 //::Date->Period
-dnt.prev_month_period = function(date){
+dnt.prev_month_period = function(date) {
   var first, last, prev_month_date;
   prev_month_date = new Date(date.getTime());
   prev_month_date.setMonth(prev_month_date.getMonth() - 1);
@@ -302,7 +297,7 @@ dnt.prev_month_period = function(date){
 };
 
 //::Date->Period
-dnt.get_week_workdays = function(date){
+dnt.get_week_workdays = function(date) {
   var mon, fri, diff, weekday;
   weekday = date.getDay();
   diff = weekday == 0 ? 6 : weekday - 1;
@@ -320,7 +315,7 @@ dnt.jsdate_to_usa = function(date) {
 };
 
 //::Iso8601d->Int->Iso8601d
-dnt.inc_iso8601d = function(d, n){
+dnt.inc_iso8601d = function(d, n) {
   var jsdate, x;
   jsdate = dnt.iso8601d_to_date(d);
   x = jsdate.getDate() + n;
@@ -334,24 +329,24 @@ dnt.get_doy = function(x) {
   var mn = x.getMonth();
   var dn = x.getDate();
   var dayOfYear = dayCount[mn] + dn;
-  if(mn > 1 && dnt.is_leap_year(x)) dayOfYear++;
+  if (mn > 1 && dnt.is_leap_year(x)) dayOfYear++;
   return dayOfYear;
 };
 
 //Date->Boolean
 dnt.is_leap_year = function(x) {
   var year = x.getFullYear();
-  if((year & 3) != 0) return false;
+  if ((year & 3) != 0) return false;
   return ((year % 100) != 0 || (year % 400) == 0);
 };
 
 //::Date->Date->Period
-dnt.to_period = function(from, to){
+dnt.to_period = function(from, to) {
   return [dnt.to_iso8601d(from), dnt.to_iso8601d(to)];
 };
 
 //::YearMonth -> ShortMonth
-dnt.short_month = function(ym){
+dnt.short_month = function(ym) {
   var arr, month;
   arr = ym.split('-');
   month = parseInt(arr[1], 10) - 1;
@@ -359,7 +354,7 @@ dnt.short_month = function(ym){
 };
 
 //::YearMonth -> YearMonth
-dnt.inc_month = function(ym){
+dnt.inc_month = function(ym) {
   var year, month, arr;
   arr = ym.split('-');
   year = parseInt(arr[0], 10);
@@ -370,7 +365,7 @@ dnt.inc_month = function(ym){
 };
 
 //::YearMonth -> YearMonth
-dnt.dec_month = function(ym){
+dnt.dec_month = function(ym) {
   var year, month, arr;
   arr = ym.split('-');
   year = parseInt(arr[0], 10);
@@ -381,7 +376,7 @@ dnt.dec_month = function(ym){
 };
 
 //:: Date -> YearMonth
-dnt.to_month = function(date){
+dnt.to_month = function(date) {
   return dnt.to_iso8601d(date).split('-').slice(0,2).join('-');
 };
 
@@ -405,7 +400,7 @@ dnt.weekdays_diff = function(startDate, endDate) {
 };
 
 //::Date -> Timezone -> Date
-dnt.local_date = function(date, timezone){
+dnt.local_date = function(date, timezone) {
   var s_date;
   s_date = Utilities.formatDate(date, timezone, 'MMMM dd, yyyy HH:mm:ss');
   return new Date(s_date);
@@ -421,27 +416,27 @@ dnt.getValueAsSeconds = function(value, tz) {
 };
 
 //::Period -> NicePeriod
-dnt.period_nice = function(period){
+dnt.period_nice = function(period) {
   var from, to, from_year, to_year;
   from = dnt.iso8601d_to_date(period[0]);
   to = dnt.iso8601d_to_date(period[1]);
   from_year = from.getFullYear();
   to_year = to.getFullYear();
-  if (from_year != to_year){
+  if (from_year != to_year) {
     return dnt.to_short(from) + ', ' + from_year + ' - ' + dnt.to_short(to) + ', ' + to_year;
   }
   return dnt.to_short(from) + ' - ' + dnt.to_short(to) + ', ' + to_year;
 };
 
 //::Date -> Short
-dnt.to_short = function(date){
+dnt.to_short = function(date) {
   var day;
   day = date.getDate();
   return day + suffix(day) + ' ' + MONTHS_SHORT[date.getMonth()];
 };
 
 //::Iso8601d -> Period
-dnt.month_to_date = function(date){
+dnt.month_to_date = function(date) {
   var arr;
   arr = date.split('-');
   arr[2] = '01';
@@ -449,7 +444,7 @@ dnt.month_to_date = function(date){
 };
 
 //::Iso8601d -> Period
-dnt.get_last_7_days = function(date){
+dnt.get_last_7_days = function(date) {
   var js_date, from, to;
   js_date = dnt.iso8601d_to_date(date);
   to = dnt.add_days(js_date, -1);
@@ -458,11 +453,11 @@ dnt.get_last_7_days = function(date){
 };
 
 //Date -> Int -> JsInterval
-dnt.get_week_period = function(date, n){//returns period starts on n weeks before beginning of the last week
+dnt.get_week_period = function(date, n) {//returns period starts on n weeks before beginning of the last week
   //and ends at the end of the lastweek;
   var lw;
   lw = dnt.get_last_week(new Date(), -1);
-  return {from: dnt.add_days(lw.from, -n * 7), to: lw.to};
+  return {from : dnt.add_days(lw.from, -n * 7), to : lw.to};
 };
 
 //::Date -> Int -> JsInterval
@@ -472,7 +467,7 @@ dnt.get_last_week = function(date, offset) {
   adjustment = 8 + ((6 + day_of_week) % 7) + offset;
   sun_date = new Date(dnt.bod(date) - DAY_IN_MILIS * adjustment);
   sat_date = new Date(sun_date.getTime() + DAY_IN_MILIS * 6);
-  return ({from: sun_date, to: sat_date});
+  return ({from : sun_date, to : sat_date});
 };
 
 //:Date -> Int
@@ -490,7 +485,7 @@ dnt.get_week = function(date) {//return number of week in a year
 };
 
 //Date -> AdwordsReportDate
-dnt.js2adwords = function(date){
+dnt.js2adwords = function(date) {
   return date.getFullYear() + lz(date.getMonth() + 1) + lz(date.getDate());
 };
 
@@ -507,26 +502,25 @@ dnt.days_diff = function(startDate, endDate) {
 };
 
 //::Int -> Int -> FormatedTime
-dnt.format_time = function(h, m){return lz(h) + ':' + lz(m);};
+dnt.format_time = function(h, m) {return lz(h) + ':' + lz(m);};
 
 //Int -> FormatedTime
-dnt.minutes_to_time = function(n){
+dnt.minutes_to_time = function(n) {
   var h, m;
   h = Math.floor(n / 60);
   m = n - h * 60;
   return dnt.format_time(h, m);
 };
 
-
 //::YYYY-MM -> JsTimestamp
-dnt.months_to_jstimestamp = function(s){
+dnt.months_to_jstimestamp = function(s) {
   var arr;
   arr = s.split('-');
   return new Date(Number(arr[0]), Number(arr[1]) - 1, 1, 0, 0, 0);
 };
 
 //::Date -> UnixMs
-dnt.begining_of_month = function(jsdate){
+dnt.begining_of_month = function(jsdate) {
   var date;
   date = new Date(jsdate.getTime());
   date.setDate(1);
@@ -534,20 +528,20 @@ dnt.begining_of_month = function(jsdate){
 };
 
 //::Date -> Date -> [UnixMs, UnixMs]
-dnt.months = function(js1, js2){
+dnt.months = function(js1, js2) {
   var month1, month2;
   return [dnt.begining_of_month(js1), dnt.begining_of_month(js2)];
 };
 
 //::Iso8601d -> Date
-dnt.iso8601d_to_date = function(s){
+dnt.iso8601d_to_date = function(s) {
   var r;
-  r = s.split('-').map(function(x){return Number(x);});
+  r = s.split('-').map(function(x) {return Number(x);});
   return new Date(r[0], r[1] - 1, r[2], 0, 0, 0);
 };
 
 //::Date -> ExtraShort
-dnt.jsdate_to_extra_short = function(date){
+dnt.jsdate_to_extra_short = function(date) {
   return date.getDate() + '-' + MONTHS_SHORT[date.getMonth()];
 };
 
@@ -561,7 +555,7 @@ dnt.add_days = function(date, n) {
 };
 
 //::UnixMs -> TimeStructure
-dnt.parse = function(x){
+dnt.parse = function(x) {
   var ms, secs, mins, hours, days, rest, weeks;
   rest = x;
   ms = rest % 1000;
@@ -575,12 +569,12 @@ dnt.parse = function(x){
   days = rest;
   weeks = Math.floor((rest - days) / 7);
   return {
-    ms: ms,
-    seconds: secs,
-    minutes: mins,
-    hours: hours,
-    days: days,
-    weeks: weeks
+    ms : ms,
+    seconds : secs,
+    minutes : mins,
+    hours : hours,
+    days : days,
+    weeks : weeks
   };
 };
 
@@ -616,17 +610,16 @@ dnt.to_minutes = function(ms) {return Math.floor(ms / (60 * 1000));};
 //::UnixMs -> Seconds
 dnt.to_seconds = function(ms) {return Math.floor(ms / 1000);};
 
-
 //::JsInterval -> TimeStructure
 dnt.diff = function(arg) {
   var ms;
   ms = arg.to.getTime() - arg.from.getTime();
   return {ms : ms,
-    seconds: dnt.to_seconds(ms),
-    minutes: dnt.to_minutes(ms),
-    hours: dnt.to_hours(ms),
-    days: dnt.to_days(ms),
-    weeks: dnt.to_weeks(ms)
+    seconds : dnt.to_seconds(ms),
+    minutes : dnt.to_minutes(ms),
+    hours : dnt.to_hours(ms),
+    days : dnt.to_days(ms),
+    weeks : dnt.to_weeks(ms)
   };
 };
 
@@ -638,7 +631,7 @@ compose = function(f, g) {
 };
 
 dnt.bod = dnt.begining_of_day;
-dnt.local_to_utc_unixms = function(date){return Date.parse(date.toISOString()).toString();}
+dnt.local_to_utc_unixms = function(date) {return Date.parse(date.toISOString()).toString();};
 
 I_D = dnt.day_of_our_era;
 D_I = dnt.era_day_to_$;
@@ -647,8 +640,8 @@ I_J = dnt.iso8601d_to_date;
 J_D = compose(I_D, J_I);
 D_J = compose(I_J,D_I);
 
-U_J = function(x){return new Date(x);};
-J_U = function(x){return x.getTime();};
+U_J = function(x) {return new Date(x);};
+J_U = function(x) {return x.getTime();};
 U_D = compose(J_D, U_J);
 D_U = compose(J_U, D_J);
 U_I = compose(J_I, U_J);
