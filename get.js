@@ -1,15 +1,15 @@
 var get = {};
 
 get.triggers_from_sheet = function(sheet, type) {
-    var vh;
-    vh =  ssb.get_vh(sheet);
-    vh.forEach(function(h) {
-      h[TYPE] = type.toLowerCase();
-      if (h.atoms == undefined) h.atoms = [];
-      h.atoms.push(h);
-    });
-    return vh;
-}
+  var vh;
+  vh =  ssb.get_vh(sheet);
+  vh.forEach(function(h) {
+    h[TYPE] = type.toLowerCase();
+    if (h.atoms == undefined) h.atoms = [];
+    h.atoms.push(h);
+  });
+  return vh;
+};
 
 //::IO() -> [GeneratorSlot]
 get.slots = function(sheet) {

@@ -1,6 +1,6 @@
 // utils 0.5.1
 
-numsort = function(a, b) {return Number(a) - Number(b);}
+numsort = function(a, b) {return Number(a) - Number(b);};
 
 //IO()->Date
 get_utc_bod = function() {
