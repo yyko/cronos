@@ -1,4 +1,6 @@
-// utils 0.4.2
+// utils 0.5.0
+
+numsort = function(a, b) {return Number(a) - Number(b);}
 
 //IO()->Date
 get_utc_bod = function() {
@@ -167,4 +169,4 @@ function include(filename) {
     .getContent();
 }
 
-// utils 0.4.2
+// utils 0.5.0
