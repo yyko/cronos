@@ -1,4 +1,4 @@
-// utils 0.5.0
+// utils 0.5.1
 
 numsort = function(a, b) {return Number(a) - Number(b);}
 
@@ -51,6 +51,7 @@ function date_diff_in_years(date1, date2) {
   return diff;
 }
 
+//::Date->Int->Date
 function nearest_weekday(date, weekday) {
   var wd, res;
   wd = date.getDay();
@@ -104,7 +105,7 @@ function match_year_interval(start_date, date, interval) {
 function match_week_interval(start_date, date, interval) {
   var wd, diff;
   wd = nearest_weekday(start_date, date.getDay());
-  diff = (dnt.bod(date) - wd.getTime()) / DAY_IN_MILIS;
+  diff = (dnt.bod(date) - dnt.bod(wd)) / DAY_IN_MILIS;
   return ((diff / 7) % interval) == 0 ? true : false;
 }
 
@@ -169,4 +170,4 @@ function include(filename) {
     .getContent();
 }
 
-// utils 0.5.0
+// utils 0.5.1
