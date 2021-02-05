@@ -17,7 +17,8 @@ fired.b = function(x, date, day) {
   d = cons_weekdays.indexOf(x.week_day);
   if (x.start_date == '') {return d == day.day_of_week;};
   if (d !== day.day_of_week) return false;
-  return match_week_interval(x.start_date, date, x.interval == '' ? 1 : x.interval && x.start_date <= date);
+  if (x.start_date > date) return false;
+  return match_week_interval(x.start_date, date, x.interval == '' ? 1 : x.interval);
 };
 
 //::Trigger->Date->DayDescription->Bool
