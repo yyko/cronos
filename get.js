@@ -1,13 +1,15 @@
 var get = {};
 
-get.state = function(key_value_sheet, slots_sheet) {
-  var m, res;
-  m = key_value_sheet.getDataRange().getValues().slice(1);
-  res = {};
-  m.forEach(function(r) {res[r[0]] = r[1];});
-  res.slots = get.slots(slots_sheet);
-  return res;
-};
+get.triggers_from_sheet = function(sheet, type) {
+    var vh;
+    vh =  ssb.get_vh(sheet);
+    vh.forEach(function(h) {
+      h[TYPE] = type.toLowerCase();
+      if (h.atoms == undefined) h.atoms = [];
+      h.atoms.push(h);
+    });
+    return vh;
+}
 
 //::IO() -> [GeneratorSlot]
 get.slots = function(sheet) {

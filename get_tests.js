@@ -1,11 +1,27 @@
-function test_get_state() {
+function test_get_triggers_from_sheet() {
   return jUnit.test_case('', {
-    'test getting state' : function() {
-      var state, kv_sheet, slots_sheet;
-      kv_sheet = tt.ds(3);
-      slots_sheet = tt.ds(2);
-      state = get.state(kv_sheet, slots_sheet);
-      clog(keys(state));
+    'test getting triggers from sheet' : function() {
+      var triggers;
+      triggers = get.triggers_from_sheet(tt.ds('0.5'), 'b');
+      jUnit.assert_eq_num(5, triggers.length);
+      triggers.forEach(function(trigger) {
+        jUnit.assert_eq_num(35, trigger.group_id);
+      });
+    }
+  });
+}
+
+function test_get_fired_groups_map() {
+  return jUnit.test_case('', {
+    'test getting fired groups map' : function() {
+      var sheet, slots, active, date, triggers_map, fired_groups, triggers_sheet, triggers;
+      triggers_sheet = tt.ds('0.5');
+      triggers = get.triggers_from_sheet(triggers_sheet, 'b');
+      date = new Date(beginningOfDay(new Date()));
+      triggers_map = group.by.field(triggers, GROUP_ID);
+      jUnit.assert_true(keys(triggers_map).indexOf('35') > -1);
+      fired_groups = get.fired_groups_map(triggers_map, date);
+      jUnit.assert_true(fired_groups['35']);
     }
   });
 }
