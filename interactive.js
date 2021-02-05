@@ -43,7 +43,7 @@ function install_trigger() {
   var ss;
   ss = SpreadsheetApp.getActive();
   remove_triggers();
-  ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(3).create();
+  ScriptApp.newTrigger('daily').timeBased().everyDays(1).atHour(0).create();
   Browser.msgBox('All triggers have been installed under ' + Session.getActiveUser() + ' account');
 }
 
