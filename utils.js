@@ -1,4 +1,20 @@
 // utils 0.5.1
+sum = function(a, b) {return a + b;};
+
+//::[Hashtable] -> String -> Hh
+vh_to_hh = function(vh, key_field) {
+  var res;
+  res = {};
+  vh.forEach(function(h, i) {
+    res[h[key_field]] = h;
+  });
+  return res;
+};
+
+function blow(h, prop, value) {
+  if (h[prop] == undefined) h[prop] = value;
+  return h;
+}
 
 numsort = function(a, b) {return Number(a) - Number(b);};
 
@@ -30,7 +46,7 @@ function trim(x) {return x.trim();}
 
 function keys(x) {return Object.keys(x);};
 
-concat = function(a, b) {return a.toString() + b.toString();};
+concat = function(a, b) {return a.concat(b);};
 
 function describe_day(date) {
   var description;
@@ -40,6 +56,7 @@ function describe_day(date) {
   description.weekday_of_month = get_weekday_of_month(date);
   description.last_weekday_of_month = is_last_weekday_of_month(date);
   description.last_day_of_month = is_last_day_of_month(date);
+  description.date = date;
   return description;
 }
 
