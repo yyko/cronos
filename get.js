@@ -1,23 +1,10 @@
 var get = {};
 
-get.triggers_from_sheet = function(sheet, type) {
-  var vh;
-  vh =  ssb.get_vh(sheet);
-  vh.forEach(function(h) {
-    h[TYPE] = type.toLowerCase();
-    if (h.atoms == undefined) h.atoms = [];
-    h.atoms.push(h);
-  });
-  return vh;
-};
-
 //::IO() -> [GeneratorSlot]
 get.slots = function(sheet) {
   var m, headers, vh;
   sheet = sheet || get.sheet(SLOTS_SH);
-  m =  ssa.get_matrix(sheet, 1);
-  headers = m.shift();
-  return mp.m_to_vh(m, headers);
+  return ssb.get_vh(sheet);
 };
 
 //::IO -> [Trigger]
@@ -30,8 +17,7 @@ get.triggers = function() {
     vh =  ssb.get_vh(e_sheet.sheet);
     vh.forEach(function(h) {
       h[TYPE] = e_sheet.name.toLowerCase();
-      if (h.atoms == undefined) h.atoms = [];
-      h.atoms.push(h);
+      return h;
     });
     return vh;
   })
