@@ -19,7 +19,7 @@ add.group = function(type) {
   sheet = get.sheet('groups');
   vh = ssb.get_vh(sheet);
   group_id = vh[0].group_id + 1;
-  ssb.on_top(sheet, {group_id : group_id, rule_types : type, start_date : start_date});
+  ssb.on_top(sheet, {group_id : group_id, rule_type : type, start_date : start_date});
   sheet = get.sheet(type);
   vh = ssb.get_vh(sheet);
   ssb.on_top(sheet, {group_id : group_id , interval : interval, start_date : start_date, measure : 'day'});

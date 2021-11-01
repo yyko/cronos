@@ -1,12 +1,14 @@
+<!--
+   main 1.0.0
+-->
 <script>
-BR = '<br>';
-STATE = {};
-hide_loading_circle();
-
-html = build.input_panel(NEW_SLOTS_INPUT_PANEL);
-
-$('#app').html(html);
-$('#submit').click(function(){
-  clog('submit clicked');
-});
+  hide_loading_circle();
+  STORE = createStore(root_reducer(), applyMiddleware(thunk));
+  app = document.getElementById('app');
+  root = cr(Provider, {store:STORE}, cr(AppConnected, null));
+  ReactDOM.render(root, app);
 </script>
+
+<!--
+   main 1.0.0
+-->

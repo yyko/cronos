@@ -1,0 +1,18 @@
+<script>
+    'use strict';
+     var App = React.createClass({
+        
+        displayName: "App",
+      
+        render: function() {
+          var typeSelector, xs, button, row1, row2;
+          xs = this.props.types;
+          typeSelector = cr(Select, {options:xs, selected: this.props.selectedType, on_change:this.props.typeChanged});
+          row1 = cr('div', {className:'row mt-2 pl-2'}, typeSelector);
+          
+          button = cr(Button, {label:'Create', className:'btn btn-primary', on_click:this.props.createSlot});
+          row2 = cr('div', {className:'row mt-2 pl-2'}, button);
+          return cr('div', {className:'container-fluid'}, row1, row2);
+        }
+      });
+</script>

@@ -1,0 +1,27 @@
+<script>
+    'use strict';
+     var Select = React.createClass({
+        
+        displayName: "Select",
+        
+        on_change: function(e){
+          if (this.props.on_change) {
+            this.props.on_change(e.target.value);
+          }
+        }, 
+      
+        render: function() {
+          var options, args, self;
+          self = this;
+          options = this.props.options.map(function(x){
+            return cr('option', {value:x.value}, x.value);
+          });
+          args = ['select', {
+            value:this.props.selected,
+            className:'selector',
+            onChange:this.on_change
+            }].concat(options);
+          return cr.apply(null, args);
+        }
+      });
+</script>

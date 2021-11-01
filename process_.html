@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+<script>
+process = {};
 
-  </body>
-</html>
+process.createSlot = function (x){
+  if (x.status == 'ok'){
+    show_msgbox('Slot created', 'green', 5000);
+  } else {
+    show_msgbox(x.data, 'red', 5000);
+  }
+}
+
+</script>

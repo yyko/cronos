@@ -1,0 +1,32 @@
+<script>
+
+var app_mapStateToProps = function(state){
+  var h;
+  h = _.extend({}, state.x_reducer);
+  return h;
+
+};
+var createSlotThunk = function(x){
+  return function(dispatch, getState){
+    var state, type;
+    state = getState();
+    type  = state.x_reducer.selectedType;
+    clog(type);
+    request({type:'createSlot', data:type});
+  }
+}
+
+var app_mapDispatchToProps = function(dispatch) {
+  return {
+    createSlot: function(x){
+      dispatch(createSlotThunk(x));
+    },
+    typeChanged: function(x){
+      dispatch({type:'typeChanged', payload:x});
+    },
+  };
+};
+
+AppConnected = connect(app_mapStateToProps, app_mapDispatchToProps)(App);
+
+</script>

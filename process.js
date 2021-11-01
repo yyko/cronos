@@ -1,5 +1,10 @@
 process = {};
 
+process.createSlot = function(x) {
+  add.slot(x);
+  return {type : 'createSlot', data : {status : 'ok'}};
+};
+
 //::Date->Int->Fn->IO()
 process.slots = function(a) {
   var date, fired_groups, idgts, active, xs, triggers_map, date, user_code, post_fn, slots, ignore_triggers;

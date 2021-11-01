@@ -2,8 +2,6 @@
 
 function onOpen() {
   var submenu = [
-    {name : 'Add A slot', functionName : 'add_slot_of_type_a'},
-    {name : 'Add B slot', functionName : 'add_slot_of_type_b'},
     {name : "Open sidebar", functionName : "open_sidebar"},
     {name : "Generate slot", functionName : "generate_slot"},
     {name : "Generate manually", functionName : "manual_generation"},
@@ -29,14 +27,6 @@ function generate_slot() {
       process.slots(bundle);
     }
   }
-}
-
-function add_slot_of_type_a() {
-  add.slot('A');
-}
-
-function add_slot_of_type_b() {
-  add.slot('B');
 }
 
 function install_trigger() {

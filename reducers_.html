@@ -1,0 +1,36 @@
+<!--
+  reducers_ 1.0.1
+-->
+
+<script>
+    x_reducer = function(state, action){
+    var newState, defState;
+    defState = {
+      types:[{value:'A'}, {value:'B'}, {value:'C'}, {value:'D'}, {value:'G'}],
+      selectedType: 'A',
+               };
+    if (_.isUndefined(state)) { newState = defState;}
+    else {newState = copy(state);}
+    
+    switch(action.type){
+      case 'typeChanged':
+        clog(action.payload);
+        newState.selectedType = action.payload;
+        break;
+        
+    }
+    return newState;
+  };
+  
+  root_reducer = function(){
+    return combineReducers({
+      x_reducer: x_reducer
+    });
+  };
+
+</script>
+
+
+<!--
+  reducers_ 1.0.1
+-->

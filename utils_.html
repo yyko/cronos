@@ -1,5 +1,7 @@
 <script>
 
+  copy = function(obj){return JSON.parse(JSON.stringify(obj));};
+
   //::a->Bool
   ndef = function(x){
     if (typeof x == 'undefined') return true;

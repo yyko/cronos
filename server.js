@@ -1,10 +1,12 @@
-// server v0.1
-//dependecy process
-
-function include_all() {
-  var modules = [ 'utils_','convert_', 'wrap_', 'gen_', 'is_', 'build_', 'validate_', 'process_', 'gen_', 'main_'];
-  return modules.map(function(module) {return include(module);}).reduce(concat);
+function include_all(n) {
+  var core, dialog;
+  n = n || 0;
+  core = ['process_','reducers_', 'utils_','globals_','Button', 'Select', 'App', 'AppConnected', 'main_'];
+  dialog = ['process_', 'utils_', 'dialog_main_'];
+  var modules = [core, dialog];
+  return modules[n].map(function(module) {return include(module);}).reduce(concat);
 }
+
 //server module v0.1. by yyk@mail.ru
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename)

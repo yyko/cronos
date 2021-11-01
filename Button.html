@@ -1,0 +1,24 @@
+<script>
+    'use strict';
+     //props: on_click::Function, id::Id, className::String, label::String
+     var Button = React.createClass({
+        displayName: "Button",
+           
+        on_click: function(e){
+          if (this.props.on_click) {
+            this.props.on_click(this.props.payload)
+          }
+        },
+     
+        render: function() {
+          var className;
+          className = ((this.props.className !== undefined)?this.props.className:'');
+          return (
+                cr('div', {className: className, onClick:this.on_click}, this.props.label)
+
+            )
+        }
+      });
+</script>
+
+
